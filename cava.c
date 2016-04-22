@@ -594,8 +594,7 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 	audio.format = -1;
 	audio.rate = 0;
 	audio.terminate = 0;
-	if (stereo) audio.channels = 2;
-	if (!stereo) audio.channels = 1;
+	audio.channels = 2;
 
 	for (i = 0; i < M; i++) {
 		audio.audio_out_l[i] = 0;
@@ -664,9 +663,7 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 	
 	pl =  fftw_plan_dft_r2c_1d(M, inl, *outl, FFTW_MEASURE); //planning to rock
 	
-	if (stereo) {
-		pr =  fftw_plan_dft_r2c_1d(M, inr, *outr, FFTW_MEASURE); 
-	}
+	pr =  fftw_plan_dft_r2c_1d(M, inr, *outr, FFTW_MEASURE); 
 
 	bool reloadConf = FALSE;
 	
@@ -862,7 +859,9 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 					fr = separate_freq_bands(outr,bars/2,lcf,hcf, k, 2);
 				} else {
 					fftw_execute(pl);
+					fftw_execute(pr);
 					fl = separate_freq_bands(outl,bars,lcf,hcf, k, 1);
+					fr = separate_freq_bands(outr,bars,lcf,hcf, k, 2);
 				}	
 
 
@@ -887,6 +886,7 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 						fr = monstercat_filter(fr, bars / 2);	
 					} else {
 						fl = monstercat_filter(fl, bars);
+						fr = monstercat_filter(fr, bars);
 					}
 				
 				}
@@ -902,7 +902,7 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 						}
 
 					} else {
-						f[o] = fl[o];
+						f[o] = fl[o] + fr[o];
 					}
 				}
 
