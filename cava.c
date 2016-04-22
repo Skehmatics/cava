@@ -343,6 +343,7 @@ void validate_config()
 	}
 
 	// validate: color
+	if (strcmp(color, "inherit") == 0) col = -1;
 	if (strcmp(color, "black") == 0) col = 0;
 	if (strcmp(color, "red") == 0) col = 1;
 	if (strcmp(color, "green") == 0) col = 2;
@@ -354,6 +355,7 @@ void validate_config()
 	// default if invalid
 
 	// validate: background color
+	if (strcmp(bcolor, "inherit") == 0) bgcol = -1;
 	if (strcmp(bcolor, "black") == 0) bgcol = 0;
 	if (strcmp(bcolor, "red") == 0) bgcol = 1;
 	if (strcmp(bcolor, "green") == 0) bgcol = 2;
