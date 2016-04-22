@@ -433,6 +433,12 @@ int * separate_freq_bands(fftw_complex out[M / 2 + 1][2], int bars, int lcf[200]
 		peak[o] = peak[o] / (hcf[o]-lcf[o]+1); //getting average
 		temp = peak[o] * k[o] * sens; //multiplying with k and adjusting to sens settings
 		if (temp <= ignore)temp = 0;
+		
+		//do some basic levels compression
+		if (temp >= 80)temp=temp/2;
+		if (temp > 100)temp=100;
+		temp = 100*(0.015*temp) - pow(0.005*temp, 3);
+		
 		if (channel == 1) fl[o] = temp;
 		else fr[o] = temp;
 
