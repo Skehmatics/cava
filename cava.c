@@ -762,7 +762,7 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 
 		// process: weigh signal to frequencies
 		for (n = 0; n < bars;
-			n++)k[n] = pow(fc[n],0.85) * ((float)height/(M*4000)) * smooth[(int)floor(((double)n) * smh)];
+			n++)k[n] = pow(fc[n],0.50) * ((float)height/(M*4000)) * smooth[(int)floor(((double)n) * smh)];
 	
 		if (stereo) bars = bars * 2; 	
 
